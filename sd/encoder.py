@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from decoder import VAE_AttentionBlock,VAE_ResidualBlock
-
+#the output of  a variational encoder is  a distribution
 class VAE_Encoder(nn.Sequential):
 
     def __intit__(self):
@@ -87,7 +87,7 @@ class VAE_Encoder(nn.Sequential):
             #(Batch_Size,4,Height/8,Width/8)-->(Batch_Size,4,Height/8,Width/8)
             variance = log_variance.exp() 
 
-            #(Batch_Size,4,Height/8,Width/8)-->(Batch_Size,4,Height/8,Width/8)
+            #(Batch_Size,4,Height/8,Width/8)--> two  tensors of shape (Batch_Size,4,Height/8,Width/8)
             stdev = variance.sqrt()
 
             #Z ~ N(0,1)
