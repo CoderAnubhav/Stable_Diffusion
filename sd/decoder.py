@@ -79,7 +79,7 @@ class  VAE_ResidualBlock(nn.Module):
 
                 VAE_AttentionBlock(512),
 
-                VAE_ResidualBlock(512,512)
+                VAE_ResidualBlock(512,512),
 
                 VAE_ResidualBlock(512,512),
 
