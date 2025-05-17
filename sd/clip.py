@@ -50,6 +50,12 @@ class CLIPLayer(nn.Module):
 
         x = x*torch.sigmoid(1.702*x)        # QuickGELU activation function (no justification just found better in practice)
 
+        x = self.linear_2(x)
+
+        x += residue
+
+        return x
+
 
 
 class CLIP(nn.Module):
