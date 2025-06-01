@@ -5,7 +5,7 @@ from decoder import VAE_AttentionBlock,VAE_ResidualBlock
 #the output of  a variational encoder is  a distribution
 class VAE_Encoder(nn.Sequential):
 
-    def __intit__(self):
+    def __init__(self):
         super().__init__(
             #(Batch_Size,Channel=3,Height=512,Width=512)-->(Batch_Size,128,Height,Width)
             nn.Conv2d(3,128,kernel_size=3,padding=1),
@@ -17,7 +17,7 @@ class VAE_Encoder(nn.Sequential):
             VAE_ResidualBlock(128,128),
 
             #(Batch_Size,Channel=3,Height=512,Width=512)-->(Batch_Size,128,Height/2,Width/2)
-            nn.conv2d(128,128,kernel_size=3,stride=2,padding=0),            
+            nn.Conv2d(128,128,kernel_size=3,stride=2,padding=0),            
 
             #(Batch_Size,128,Height/2,Width/2)-->(Batch_Size,256,Height/2,Width/2)
             VAE_ResidualBlock(128,256),
@@ -26,7 +26,7 @@ class VAE_Encoder(nn.Sequential):
             VAE_ResidualBlock(256,256),
             
             #(Batch_Size,256,Height/2,Width/2)-->(Batch_Size,256,Height/4,Width/4)
-            nn.conv2d(256,256,kernel_size=3,stride=2,padding=0),            
+            nn.Conv2d(256,256,kernel_size=3,stride=2,padding=0),            
 
             #(Batch_Size,256,Height/4,Width/4)-->(Batch_Size,512,Height/4,Width/4)
             VAE_ResidualBlock(256,512),
@@ -35,7 +35,7 @@ class VAE_Encoder(nn.Sequential):
             VAE_ResidualBlock(512,512),
 
             #(Batch_Size,512,Height/4,Width/4)-->(Batch_Size,512,Height/8,Width/8)
-            nn.conv2d(512,512,kernel_size=3,stride=2,padding=0),
+            nn.Conv2d(512,512,kernel_size=3,stride=2,padding=0),
 
             #(Batch_Size,512,Height/8,Width/8)-->(Batch_Size,512,Height/8,Width/8)            
             VAE_ResidualBlock(512,512),
@@ -59,10 +59,10 @@ class VAE_Encoder(nn.Sequential):
             nn.SiLU(),
             
             #(Batch_Size,512,Height/8,Width/8)-->(Batch_Size,8,Height/8,Width/8)            
-            nn.conv2d(512,8,kernel_size=3,padding=1),
+            nn.Conv2d(512,8,kernel_size=3,padding=1),
                                                                                             #---> Bottleneck of the encoder
             #(Batch_Size,8,Height/8,Width/8)-->(Batch_Size,8,Height/8,Width/8)            
-            nn.conv2d(8,8,kernel_size=1,padding=0)
+            nn.Conv2d(8,8,kernel_size=1,padding=0)
 
         )
 

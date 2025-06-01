@@ -61,9 +61,10 @@ class CLIPLayer(nn.Module):
 class CLIP(nn.Module):
 
     def __init__(self):
+        super().__init__()
         self.embedding = CLIPEmbedding(49408,768,77)        #Vocab Size, Max Seq_Len, Padding
 
-        self.layers = nn.Module([
+        self.layers = nn.ModuleList([
             CLIPLayer(12,768) for i in range(12)            # 12-> Heads in Multi head Attention 768-> Seq_Len 12->no of layers
         ])
 
@@ -76,6 +77,9 @@ class CLIP(nn.Module):
 
         #(Batch,Seq_Len) -> (Batch_Size,Seq_Len,Dim)                    Dim -> 768
 
+        # (Batch_Size,Seq_Len) -> (Batch_Size,Seq_Len,Dim)
+        state = self.embedding(tokens)
+        
         for layer in self.layers:
             state = layer(state)
 
